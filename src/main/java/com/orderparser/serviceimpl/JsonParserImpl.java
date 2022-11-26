@@ -21,29 +21,28 @@ public class JsonParserImpl implements OrderParser {
 
 	public List<OutputData> parser(String inputFileName) {
 		
-		ObjectMapper mapper = new ObjectMapper();
-		
 		int counter = 0;
-		
-		System.out.println("hello");
+		ObjectMapper mapper = new ObjectMapper();
 		BufferedReader reader = null;
 		Order order = null;
 		List<OutputData> resultList = new ArrayList<>();
-		 OutputData result = null;
+		OutputData result = null;
+		
 		try {
 			ClassPathResource res = new ClassPathResource(inputFileName);
-			
 		    reader = new BufferedReader(
 		        new InputStreamReader(res.getInputStream()));
+		    
 		    // do reading, usually loop until end of file reading 
 		    String mLine;
 		    while ((mLine = reader.readLine()) != null) {
+		    	
 		       order = mapper.readValue(mLine, Order.class);
-		       
 		       result= new OutputData(order.getOrderId(), order.getAmount(), order.getComment(), inputFileName, ++counter, "OK");
 		       resultList.add(result);
 		    }
 		} catch (Exception e) {
+			e.printStackTrace();
 			result= new OutputData(order.getOrderId(), order.getAmount(), order.getComment(), inputFileName, ++counter, e.getMessage());
 			 resultList.add(result);
 		} finally {
@@ -51,12 +50,9 @@ public class JsonParserImpl implements OrderParser {
 		         try {
 		             reader.close();
 		         } catch (IOException e) {
-		             //log the exception
 		         }
 		    }
-		   
 		}
-
 		return resultList;
 	}
 

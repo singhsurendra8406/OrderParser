@@ -17,20 +17,19 @@ public class CSVParserImpl implements OrderParser {
 
 	@Override
 	public List<OutputData> parser(String inputFileName) {
-
 		
 		int counter = 0;
-		
 		BufferedReader reader = null;
 		String[] values = null;
 		List<OutputData> resultList = new ArrayList<>();
 		OutputData result = null;
-		 String mLine;
+		String mLine;
 		 
 		try {
 			ClassPathResource res = new ClassPathResource(inputFileName);
 		    reader = new BufferedReader(
 		        new InputStreamReader(res.getInputStream()));
+		    
 		    //skip column names
 		    reader.readLine();
 		    while ((mLine = reader.readLine()) != null) {
@@ -41,7 +40,7 @@ public class CSVParserImpl implements OrderParser {
 		       resultList.add(result);
 		    }
 		} catch (Exception e) {
-			   e.printStackTrace();
+			e.printStackTrace();
 			result= new OutputData(Integer.valueOf(values[0]), Float.valueOf(values[1]), values[3], inputFileName, ++counter, e.getMessage());
 			resultList.add(result);
 			
@@ -50,12 +49,9 @@ public class CSVParserImpl implements OrderParser {
 		         try {
 		             reader.close();
 		         } catch (IOException e) {
-		             //log the exception
 		         }
 		    }
-		   
 		}
-
 		return resultList;
 	}
 	
