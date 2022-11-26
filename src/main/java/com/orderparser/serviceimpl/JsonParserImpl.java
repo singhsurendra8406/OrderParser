@@ -44,7 +44,7 @@ public class JsonParserImpl implements OrderParser {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result= new OutputData(order.getOrderId(), order.getAmount(), order.getComment(), inputFileName, ++counter, e.getMessage());
-			 resultList.add(result);
+			resultList.add(result);
 		} finally {
 		    if (reader != null) {
 		         try {
